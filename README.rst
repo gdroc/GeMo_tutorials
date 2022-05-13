@@ -215,7 +215,7 @@ chr01 3905155 4800522 0.6813746934348566  0.32271710110143237
 Go to `GeMo <https://gemo.southgreen.fr/>`__ WebApp
   Load data has follow
 
-.. image:: _images/VCFHunter_Kunnan_ideo.png
+.. image:: https://gemo.readthedocs.io/en/latest/_images/VCFHunter_Kunnan_ideo.png
    :target: _images/VCFHunter_Kunnan_ideo.png
    :align: center
    :alt: GeMo_Vizualise
