@@ -155,9 +155,9 @@ For each individual present in the file data/Baurens_et_al_2019_individuals.txt,
 
 -  DYN163-Kunnan_ideo.txt :  A text file of the position of genomic blocks the ancestry mosaic with a succession of genomic blocks along the chromosome
 
-===   ========= ========  ======== ===============
+===== ========= ========  ======== ===============
 chr   haplotype start     end      ancestral_group
-===   ========= ========  ======== ===============
+===== ========= ========  ======== ===============
 chr01 0         0         20888    AA
 chr01 0         20888     451633   AA
 chr01 0         451633    848109   AA
@@ -166,7 +166,7 @@ chr01 0         1198648   1555128  un
 chr01 0         1555128   1899887  AA
 chr01 0         1899887   2296417  un
 chr01 0         2296417   2759817  un
-===   ========= ========  ======== ===============
+===== ========= ========  ======== ===============
 
 -  DYN163-Kunnan_chrom.txt : A tab file with name, length and karyotype based on ploidy (optionaly the location of centromere).
 
