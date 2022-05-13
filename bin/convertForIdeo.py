@@ -148,14 +148,14 @@ def __main__():
 				IndexColName[col] = col+'\t#%02x%02x%02x' % (189, 189, 189)
 	
 	# Printing color file
-	outfile = open(options.prefix+'_color.tab','w')
+	outfile = open(options.prefix+'_color.txt','w')
 	outfile.write("group\tname\thex\n")
 	for col in IndexColName:
 		outfile.write(col+'\t'+IndexColName[col]+'\n')
 	outfile.close()
 	
 	# Generating files for ideogram
-	outfile = open(options.prefix+'_ideoProb.tab','w')
+	outfile = open(options.prefix+'_ideoProb.txt','w')
 	outfile.write('\t'.join(['chr', 'haplotype', 'start', 'end', 'ancestral_group']))
 	outfile.write('\n')
 	if options.chro == 'all':
@@ -182,7 +182,7 @@ def __main__():
 		if data:
 			dicoChr[data[0]] = data[1]
 	file.close()
-	outfile = open(options.prefix+'_chrom.tab','w')
+	outfile = open(options.prefix+'_chrom.txt','w')
 	outfile.write("\t".join(["chr", "len","centromereInf", "centromereSup", "label"])+"\n")
 	for chro in listChr:
 		mot = ''
@@ -200,7 +200,7 @@ def __main__():
 			file = gzip.open(CurveFile,'rt')
 		else:
 			file = open(CurveFile, 'r')
-		outfile = open(options.prefix+'_curve.tab','w')
+		outfile = open(options.prefix+'_curve.txt','w')
 		header = file.readline().split()
 		CHRPOS = header.index("CHR")
 		POSPOS = header.index("POS")
@@ -260,9 +260,9 @@ def __main__():
 		outfile.close()
 		file.close()
 	
-	# Calculating blocks according to GEMO algorithm
+	# Calculating blocks according to GeMo algorithm
 	
-	file = open(options.prefix+'_curve.tab')
+	file = open(options.prefix+'_curve.txt')
 	header = file.readline().split()
 	CHRPOS = header.index("chr")
 	STAPOS = header.index("start")
@@ -404,7 +404,7 @@ def __main__():
 	
 	
 	## Block for output file header
-	outfile = open(options.prefix+'_ideo.tab','w')
+	outfile = open(options.prefix+'_ideo.txt','w')
 	outfile.write('\t'.join(['chr', 'haplotype', 'start', 'end', 'ancestral_group']))
 	outfile.write('\n')
 	## end of block for output file header now printing output
