@@ -220,7 +220,7 @@ Go to `GeMo <https://gemo.southgreen.fr/>`__ WebApp
    :align: center
    :alt: GeMo_Vizualise
 
-.. image:: https://gemo.readthedocs.io/en/latest/_images/VCFHunter_Kunnan_curve.png
+.. image:: https://gemo.readthedocs.io/en/latest/_images/CFHunter_Kunnan_curve.png
    :target: _images/VCFHunter_Kunnan_curve.png
    :align: center
    :alt: GeMo_Vizualise
