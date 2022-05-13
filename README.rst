@@ -151,7 +151,7 @@ Visualization and block refinement with GeMo
 
 A directory was create depending on parameter dirout (default method name)
 
-For example, for VCFHunter, for each individual present in the file data/Baurens_et_al_2019_individuals.txt, 4 outputs are produced in this directory,  prefixed with the name of indivual :
+For each individual present in the file data/Baurens_et_al_2019_individuals.txt, 4 outputs are produced in this directory,  prefixed with the name of indivual :
 
 -  DYN163-Kunnan_ideo.txt :  A text file of the position of genomic blocks the ancestry mosaic with a succession of genomic blocks along the chromosome
 
