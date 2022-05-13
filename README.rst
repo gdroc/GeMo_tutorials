@@ -84,15 +84,15 @@ Input
 =========== ======
 individuals origin
 =========== ======
-P2      AA
-T01     BB
-T02     BB
-T03     AA
-T04     AA
-T05     AA
-T06     AA
-T07     AA
-T08     BB
+P2          AA
+T01         BB
+T02         BB
+T03         AA
+T04         AA
+T05         AA
+T06         AA
+T07         AA
+T08         BB
 =========== ======
 
 - Baurens_et_al_2019.vcf : A vcf file with ancestral and admixed individuals
