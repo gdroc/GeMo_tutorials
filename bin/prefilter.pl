@@ -11,7 +11,7 @@ use FindBin;
 use Pod::Usage;
 
 # Initialization of files and variables that can be chosen by the user to launch the script.
-my $input;
+my $matrix;
 my $gst = 0.9;
 my $missing = 0.3;
 my $help = "";
@@ -19,29 +19,29 @@ my $output = "Diagnosis_matrix";
 Getopt::Long::Configure ('bundling');
 my $usage = $FindBin::Bin ."/". $FindBin::Script.q/ --help
 Parameters :
-    --input     reference matrice [Required]
+    --matrix    GST matrix [Required]
     --gst       threshold for gst (Default : 0.9)
     --missing   threshold for missing data (Default 0.3)
     --output    output file name (Default Diagnosis_matrix) 
     --help      display this help
 /;
 GetOptions (
-	't|input=s'   => \$input, ## Reference matrix with GST and Alternative allele frequence (F) informations. The first column names schould be under the format: #CHROM POS ID REF ALT %Nref GST1 GST2 GST3 F1 F2 F3
+	'm|matrix=s'  => \$matrix, ## Reference matrix with GST and Alternative allele frequence (F) informations. The first column names schould be under the format: #CHROM POS ID REF ALT %Nref GST1 GST2 GST3 F1 F2 F3
 	'g|gst=f'     => \$gst, ## value of GST (inter-population differentiation parameter) necessary for an allele to be an ancestry informative marker.
-	'm|missing=f' => \$missing, ## maximal frequency of missing data for an allele to be defined as an ancestry informative marker
+	'x|missing=f' => \$missing, ## maximal frequency of missing data for an allele to be defined as an ancestry informative marker
 	'o|output=s'  => \$output,
 	'h|help!'     => \$help, ## display the help
 )
 or pod2usage(-message => $usage);
 
 if ($help) { pod2usage(-message => $usage); }
-if (!$input){
+if (!$matrix){
     warn $usage;
-	warn "\nWarn :: --input is empty. Please specify a reference matrice\n\n";
+	warn "\nWarn :: --matrix is empty. Please specify a GST matrix\n\n";
     exit 0; 
 }  
 #creation of 2 lists: @ref and @header:
-open(F1,"$input") or die ("Error: DSNP matrix wont open\n");  # open the DSNP matrix and read the first line.
+open(F1,"$matrix") or die ("Error: DSNP matrix wont open\n");  # open the DSNP matrix and read the first line.
 my $first_line = <F1>;
 chomp($first_line);
 my @header = (split("\t", $first_line)); # header of the DSNP matrix 
@@ -59,13 +59,13 @@ foreach my $head(@header){
 
 # Selection of all ancestry informative markers for each ancestry and associated allele (alt or ref)
 
-my%allele_refalt; # key 1 = parent / key 2 = chromosome / key 3 = position => value = allele
-my$chro = ""; # chromosome of the read line 
-my$pos = ""; # postiton of the read line 
-my%isAMarker; # key 1 = parent / key 2 = chromosome / key 3 = position => value = 1 if the position is an marker for this parent
-my$Bref; # value of reference allele for the position of the read line 
-my$Balt; # value of alternative allele for the position of the read line 
-open(F1,"$input") or die ("Erreur d'ouverture de F1\n"); #ouverture du fichier matrice
+my %allele_refalt; # key 1 = parent / key 2 = chromosome / key 3 = position => value = allele
+my $chro = ""; # chromosome of the read line 
+my $pos = ""; # postiton of the read line 
+my %isAMarker; # key 1 = parent / key 2 = chromosome / key 3 = position => value = 1 if the position is an marker for this parent
+my $Bref; # value of reference allele for the position of the read line 
+my $Balt; # value of alternative allele for the position of the read line 
+open(F1,"$matrix");
 while (my $line = <F1>){ # pour chaque dsnps
 	chomp($line); 
 	my @data = (split("\t", $line));

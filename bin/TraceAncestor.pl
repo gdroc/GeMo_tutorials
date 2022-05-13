@@ -11,21 +11,21 @@ use FindBin;
 use Pod::Usage;
 
 # Initialization of files and variables that can be chosen by the user to launch the script.
-my $input;
+my $matrix;
 my $vcf;  
 my $window_size = 10;
 my $window_cut = 100;
 my $LOD = 3;
 my $freq = 0.99;
-my $hybrid;
+my $individuals;
 my $help = ""; 
 my $merge; 
 my $dirout = "result";
 my $usage = $FindBin::Bin ."/". $FindBin::Script.q/ --help
 Parameters :
-    --input     reference matrice [Required]
+    --matrix     Diagnosis matrix [Required]
     --vcf       vcf of the hybrid population 
-    --hybrid    hybrid file [Required]
+    --individuals    A two column file with individuals to scan for origin (same as defined in the VCF headerline) in the first column and the ploidy in the second column [Required]
     --window    number of markers by window (Default 10)
     --lod       LOD value to conclude for one hypothesis (Default 3)
     --freq      theoretical frequency used to calcul the LOD (Default 0.99)
@@ -35,9 +35,9 @@ Parameters :
 /;
 Getopt::Long::Configure ('bundling');
 GetOptions (
-	'i|input=s'     => \$input, ## reference matrix
+	'm|matrix=s'     => \$matrix, ## reference matrix
 	'v|vcf=s'       => \$vcf, ## vcf of hybrids. Hybrids should not have space in their names and no special characters. 
-	'hybrid=s' => \$hybrid, 
+	'i|individuals=s' => \$individuals, 
 	'w|window=i'    =>\$window_size, ## number of ancestral markers by windows on a chromosome
 	'l|lod=i'       =>\$LOD, ## LOD value to conclude for one hypothesis or an other
 	't|threshold=f' =>\$freq, ## Theoretical frequency used to calcul the LOD
@@ -48,9 +48,9 @@ GetOptions (
 or pod2usage(-message => $usage);
 
 if ($help) { pod2usage(-message => $usage); }
-if (!$input){
+if (!$matrix){
     warn $usage;
-	warn "\nWarn :: --input is empty. Please specify a reference matrice\n\n";
+	warn "\nWarn :: --matrix is empty. Please specify a Diagnisis matrix\n\n";
     exit 0; 
 }  
  
@@ -59,9 +59,9 @@ if (!$vcf){
 	warn "\nWarn :: --vcf is empty. Please specify a vcf file\n\n";
     exit 0; 
 }
-if (!$hybrid){
+if (!$individuals){
     warn $usage;
-	warn "\nWarn :: --hybrid is empty. Please specify a hybrid file\n\n";
+	warn "\nWarn :: --individuals is empty. Please specify a file with individuals to scan for origin\n\n";
     exit 0; 
 }  
 #------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -70,7 +70,7 @@ if (!$hybrid){
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 my %hybrid;  
 
-open(IN,$hybrid)  or die ("Error: ancestors wont open\n");  
+open(IN,$individuals)  or die ("Error: ancestors wont open\n");  
 while(<IN>){
     chomp;
     my ($accession,$ploidy) = (split(/\t/,$_));
@@ -101,7 +101,7 @@ my%allele_refalt; # key 1 = ancestor / key 2 = chromosome / key3 = position of t
 my%catPos; # key 1 = ancestor / key 2 = chromosome => value = concatenation of every position of a windows separated by a -
 my%hashRef; # marker counter by window
 my@chromosomList; # list of chromosomes in the ancestor matrix
-open(MATRIX,$input) or die ("Error: matrix of ancestors wont open\n"); #opening of the ancestor matrix
+open(MATRIX,$matrix) or die ("Error: matrix of ancestors wont open\n"); #opening of the ancestor matrix
 
 while (my $line = <MATRIX>){ # for each marker
 	chomp($line);

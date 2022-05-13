@@ -13,14 +13,14 @@ my $ancestors;
 my $DM;
 my $nbMark;
 my $depth = 5;
-my $output = "GSTmatrice.txt";
+my $output = "GSTmatrix.txt";
 my $help = "";
 my $usage = $FindBin::Bin ."/". $FindBin::Script.q/ --help
 Parameters :
-    --vcf       vcf containing the ancestors [Required]
-    --ancestor  ancestor file [Required]
+    --vcf       vcf containing the ancestors and other individuals to scan [Required]
+    --ancestor  A two column file with individuals in the first column and group tag (i.e. origin) in the second column [Required]
     --depth     minimal depth for a snp to be used in the analysis (Default 5)
-    --output    output file name (Default GSTmatrice.txt) 
+    --output    output file name (Default GSTmatrix.txt) 
     --help
 /;
 Getopt::Long::Configure ('bundling');

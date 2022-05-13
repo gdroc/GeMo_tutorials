@@ -98,11 +98,11 @@ if ($method eq "vcfhunter") {
 }
 else {
     &exec("mkdir -p $dirout");
-    my $cmd_step1 = "bin/vcf2gst.pl --vcf ". $vcf[0] ." --ancestor ". $origin ." --output ". $dirout. "/GSTMatrice.txt";
+    my $cmd_step1 = "bin/vcf2gst.pl --vcf ". $vcf[0] ." --ancestor ". $origin ." --output ". $dirout. "/GSTMatrix.txt";
     &exec($cmd_step1);
-    my $cmd_step2 = "bin/prefilter.pl --input ". $dirout. "/GSTMatrice.txt --output ". $dirout. "/Diagnosis_matrix.txt";
+    my $cmd_step2 = "bin/prefilter.pl --matrix ". $dirout. "/GSTMatrix.txt --output ". $dirout. "/Diagnosis_matrix.txt";
     &exec($cmd_step2);
-    my $cmd_step3 = "bin/TraceAncestor.pl --vcf ". $vcf[0] ." --dirout ". $dirout ."  --input ". $dirout. "/Diagnosis_matrix.txt --hybrid ".$individuals;
+    my $cmd_step3 = "bin/TraceAncestor.pl --vcf ". $vcf[0] ." --dirout ". $dirout ."  --matrix ". $dirout. "/Diagnosis_matrix.txt --individuals ".$individuals;
     &exec($cmd_step3);
 }
 
