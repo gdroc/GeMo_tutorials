@@ -3,8 +3,6 @@
 
 use warnings;
 use strict;
-use lib 'lib';
-use Parallel::ForkManager;
 use Getopt::Long; 
 use FindBin;
 use Pod::Usage;
@@ -62,7 +60,6 @@ if (!$individuals){
     exit 0; 
 }
  
-my $pm = Parallel::ForkManager->new($threads);
 $dirout = $method if $dirout eq "";
 my $chromosome = &vcf_header($vcf[0],"chromosome$$.txt");
 
@@ -79,7 +76,6 @@ if ($method eq "vcfhunter") {
     LOOP:
     while(<ACCESSION>){
         chomp;
-        my $pid = $pm->start and next LOOP;
         my ($accession,$ploidy) = (split(/\t/,$_));
         my $cmd_step3 = "bin/allele_ratio_per_acc.py -c list_vcf.txt -g ".$origin. " -i temp/step2 -o temp/step3 -a ". $accession;
         &exec($cmd_step3);
@@ -89,9 +85,7 @@ if ($method eq "vcfhunter") {
         
         my $cmd_step5 = "bin/convertForIdeo.py --name ".$accession ." --dir temp/step4/ --col ".$color ." --size ".$chromosome ." --prefix ".$dirout. "/".$accession ." --plo ".$ploidy;
         &exec($cmd_step5);
-        $pm->finish;
     }
-    $pm->wait_all_children; 
     &exec("rm -Rf temp list_vcf.txt $chromosome");
 
 
